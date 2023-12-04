@@ -6,41 +6,42 @@ import org.springframework.http.HttpStatus
 
 class ApiResponseTest : StringSpec({
     "HttpStatus만 존재하는 success" {
-        val httpStatus = HttpStatus.OK
+        val statusCode = HttpStatus.OK
 
-        val sut = ApiResponse.success(httpStatus)
+        val sut = ApiResponse.success(statusCode)
 
         sut.body shouldBe null
-        sut.statusCode shouldBe httpStatus
+        sut.statusCode shouldBe statusCode
     }
 
     "HttpStatus와 body모두 존재하는 success" {
-        val httpStatus = HttpStatus.NOT_FOUND
+        val statusCode = HttpStatus.NOT_FOUND
         val body = "body"
 
-        val sut = ApiResponse.success(body, httpStatus)
+        val sut = ApiResponse.success(body, statusCode)
 
         sut.body shouldBe body
-        sut.statusCode shouldBe httpStatus
+        sut.statusCode shouldBe statusCode
     }
 
     "HttpStatus만 존재하는 fail" {
-        val httpStatus = HttpStatus.BAD_REQUEST
+        val statusCode = HttpStatus.BAD_REQUEST
 
-        val sut = ApiResponse.fail(httpStatus)
+        val sut = ApiResponse.fail(statusCode)
 
         sut.body shouldBe null
-        sut.statusCode shouldBe httpStatus
+        sut.statusCode shouldBe statusCode
     }
 
     "HttpStatus와 body모두 존재하는 fail" {
-        val httpStatus = HttpStatus.BAD_REQUEST
-        val body = FailBody(errorCode = "body")
+        val statusCode = HttpStatus.BAD_REQUEST
+        val body = FailBody(errorCode = "body", message = "")
 
-        val sut = ApiResponse.fail(body = body, httpStatus = httpStatus)
+        val sut = ApiResponse.fail(body = body, statusCode = statusCode)
 
         sut.body shouldBe body
         sut.body?.errorCode shouldBe body.errorCode
-        sut.statusCode shouldBe httpStatus
+        sut.body?.message shouldBe body.message
+        sut.statusCode shouldBe statusCode
     }
 })

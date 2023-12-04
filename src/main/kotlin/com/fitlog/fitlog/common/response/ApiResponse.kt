@@ -4,25 +4,25 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 
 class ApiResponse<T> : ResponseEntity<T> {
-    constructor(httpStatus: HttpStatus) : super(httpStatus)
+    constructor(statusCode: HttpStatus) : super(statusCode)
 
-    constructor(body: T, httpStatus: HttpStatus) : super(body, httpStatus)
+    constructor(body: T, statusCode: HttpStatus) : super(body, statusCode)
 
     companion object {
-        fun success(httpStatus: HttpStatus): ApiResponse<Void> {
-            return ApiResponse(httpStatus = httpStatus)
+        fun success(statusCode: HttpStatus): ApiResponse<Void> {
+            return ApiResponse(statusCode = statusCode)
         }
 
-        fun <T> success(body: T, httpStatus: HttpStatus): ApiResponse<T> {
-            return ApiResponse(body = body, httpStatus = httpStatus)
+        fun <T> success(body: T, statusCode: HttpStatus): ApiResponse<T> {
+            return ApiResponse(body = body, statusCode = statusCode)
         }
 
-        fun fail(httpStatus: HttpStatus): ApiResponse<Void> {
-            return ApiResponse(httpStatus = httpStatus)
+        fun fail(statusCode: HttpStatus): ApiResponse<Void> {
+            return ApiResponse(statusCode = statusCode)
         }
 
-        fun fail(body: FailBody, httpStatus: HttpStatus): ApiResponse<FailBody> {
-            return ApiResponse(body = body, httpStatus = httpStatus)
+        fun fail(body: FailBody, statusCode: HttpStatus): ApiResponse<FailBody> {
+            return ApiResponse(body = body, statusCode = statusCode)
         }
     }
 }
