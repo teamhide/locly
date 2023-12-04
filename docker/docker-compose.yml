@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0.33
+    container_name: fitlog-mysql
+    restart: always
+    ports:
+      - '33061:3306'
+    environment:
+      MYSQL_USER: fitlog
+      MYSQL_PASSWORD: fitlog
+      MYSQL_DATABASE: fitlog
+      MYSQL_ROOT_PASSWORD: fitlog
+      TZ: 'Asia/Seoul'
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - mysqldb:/var/lib/mysql
+volumes:
+  mysqldb:

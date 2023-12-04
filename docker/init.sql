@@ -1,0 +1,2 @@
+CREATE DATABASE fitlog_test;
+GRANT ALL PRIVILEGES ON fitlog_test.* TO fitlog@'%' WITH GRANT OPTION;
