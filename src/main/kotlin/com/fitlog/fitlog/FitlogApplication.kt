@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class FitlogApplication
 
 fun main(args: Array<String>) {
-	runApplication<FitlogApplication>(*args)
+    runApplication<FitlogApplication>(*args)
 }

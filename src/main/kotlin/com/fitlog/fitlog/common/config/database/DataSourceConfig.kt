@@ -19,21 +19,21 @@ class DataSourceConfig {
     @ConfigurationProperties(prefix = "spring.datasource.writer.hikari")
     fun writerDataSource(): DataSource {
         return DataSourceBuilder.create().type(HikariDataSource::class.java)
-                .build()
+            .build()
     }
 
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.reader.hikari")
     fun readerDataSource(): DataSource {
         return DataSourceBuilder.create().type(HikariDataSource::class.java)
-                .build()
+            .build()
     }
 
     @Bean
     @DependsOn("writerDataSource", "readerDataSource")
     fun routingDataSource(
-            @Qualifier("writerDataSource") writerDataSource: DataSource,
-            @Qualifier("readerDataSource") readerDataSource: DataSource
+        @Qualifier("writerDataSource") writerDataSource: DataSource,
+        @Qualifier("readerDataSource") readerDataSource: DataSource
     ): DataSource {
         val routingDataSource = RoutingDataSource()
         val dataSourceMap = HashMap<Any, Any>()
