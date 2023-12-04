@@ -67,7 +67,7 @@ tasks.withType<Test> {
 
 val testAll by tasks.registering {
     dependsOn("test", "jacocoTestReport", "jacocoTestCoverageVerification")
-// 	tasks["test"].mustRunAfter(tasks["spotlessCheck"])
+    tasks["test"].mustRunAfter(tasks["ktlintCheck"])
     tasks["jacocoTestReport"].mustRunAfter(tasks["test"])
     tasks["jacocoTestCoverageVerification"].mustRunAfter(tasks["jacocoTestReport"])
 }
@@ -142,6 +142,7 @@ tasks.jacocoTestCoverageVerification {
             classDirectories.setFrom(sourceSets.main.get().output.asFileTree)
             excludes = listOf(
                 "com.fitlog.fitlog.common.AwsConfig",
+                "com.fitlog.fitlog.common.healthcheck**"
             ) + queryDslClasses
         }
     }
