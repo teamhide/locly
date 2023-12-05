@@ -40,12 +40,17 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
     implementation("io.github.oshai:kotlin-logging-jvm:5.1.0")
+    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
     kapt("jakarta.annotation:jakarta.annotation-api")
     kapt("jakarta.persistence:jakarta.persistence-api")
     runtimeOnly("com.mysql:mysql-connector-j")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
+    testImplementation("org.springframework.security:spring-security-test")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:5.6.2")
     testImplementation("io.kotest:kotest-framework-datatest:5.6.2")
     testImplementation("io.kotest:kotest-assertions-core:5.6.2")
@@ -141,8 +146,8 @@ tasks.jacocoTestCoverageVerification {
             }
             classDirectories.setFrom(sourceSets.main.get().output.asFileTree)
             excludes = listOf(
-                "com.fitlog.fitlog.common.AwsConfig",
-                "com.fitlog.fitlog.common.healthcheck**"
+                "com.fitlog.fitlog.FitlogApplicationKt",
+                "com.fitlog.fitlog.common.healthcheck**",
             ) + queryDslClasses
         }
     }

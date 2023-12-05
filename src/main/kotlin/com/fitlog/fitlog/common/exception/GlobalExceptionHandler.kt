@@ -4,13 +4,14 @@ import com.fitlog.fitlog.common.response.ApiResponse
 import com.fitlog.fitlog.common.response.FailBody
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.http.converter.HttpMessageNotReadableException
+import org.springframework.security.core.AuthenticationException
 import org.springframework.web.HttpRequestMethodNotSupportedException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.MissingRequestHeaderException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.servlet.NoHandlerFoundException
-import javax.naming.AuthenticationException
+import org.springframework.web.servlet.resource.NoResourceFoundException
 
 private val logger = KotlinLogging.logger { }
 
@@ -43,13 +44,6 @@ class GlobalExceptionHandler {
         return ApiResponse.fail(body, errorConst.statusCode)
     }
 
-    @ExceptionHandler(AuthenticationException::class)
-    fun handleAuthenticationException(e: AuthenticationException): ApiResponse<FailBody> {
-        val errorConst = CommonErrorConst.UNAUTHORIZED
-        val body = FailBody(errorCode = errorConst.errorCode, message = errorConst.message)
-        return ApiResponse.fail(body, errorConst.statusCode)
-    }
-
     @ExceptionHandler(NoHandlerFoundException::class)
     fun handleNoHandlerFoundException(e: NoHandlerFoundException): ApiResponse<FailBody> {
         val errorConst = CommonErrorConst.NO_HANDLER_FOUND
@@ -60,6 +54,20 @@ class GlobalExceptionHandler {
     @ExceptionHandler(MissingRequestHeaderException::class)
     fun handleMissingRequestHeaderException(e: MissingRequestHeaderException): ApiResponse<FailBody> {
         val errorConst = CommonErrorConst.MISSING_REQUEST_HEADER
+        val body = FailBody(errorCode = errorConst.errorCode, message = errorConst.message)
+        return ApiResponse.fail(body, errorConst.statusCode)
+    }
+
+    @ExceptionHandler(AuthenticationException::class)
+    fun handleAuthenticationException(e: AuthenticationException): ApiResponse<FailBody> {
+        val errorConst = CommonErrorConst.AUTHENTICATION_ERROR
+        val body = FailBody(errorCode = errorConst.errorCode, message = errorConst.message)
+        return ApiResponse.fail(body, errorConst.statusCode)
+    }
+
+    @ExceptionHandler(NoResourceFoundException::class)
+    fun handleNoResourceFoundException(e: NoResourceFoundException): ApiResponse<FailBody> {
+        val errorConst = CommonErrorConst.AUTHENTICATION_ERROR
         val body = FailBody(errorCode = errorConst.errorCode, message = errorConst.message)
         return ApiResponse.fail(body, errorConst.statusCode)
     }

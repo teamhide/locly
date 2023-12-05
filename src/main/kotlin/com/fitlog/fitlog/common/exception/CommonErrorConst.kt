@@ -14,7 +14,7 @@ enum class CommonErrorConst(val errorCode: String, val message: String, val stat
     METHOD_ARGUMENT_NOT_VALID(
         "METHOD_ARGUMENT_NOT_VALID", "Method argument not valid", HttpStatus.BAD_REQUEST
     ),
-    UNAUTHORIZED("UNAUTHORIZED", "Unauthorized", HttpStatus.UNAUTHORIZED),
+    AUTHENTICATION_ERROR("AUTHENTICATION_ERROR", "Authentication error", HttpStatus.UNAUTHORIZED),
     NO_HANDLER_FOUND("NO_HANDLER_FOUND", "No endpoint GET URL", HttpStatus.NOT_FOUND),
     UNKNOWN("UNKNOWN", "Unknown", HttpStatus.INTERNAL_SERVER_ERROR),
     MISSING_REQUEST_HEADER(

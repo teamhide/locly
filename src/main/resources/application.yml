@@ -38,3 +38,5 @@ spring:
     user: fitlog
     password: fitlog
     locations: classpath:db/migration
+jwt:
+  secret-key: hidehidehidehidehidehidehidehidehide
