@@ -2,15 +2,15 @@ version: '3.8'
 services:
   mysql:
     image: mysql:8.0.33
-    container_name: fitlog-mysql
+    container_name: locly-mysql
     restart: always
     ports:
       - '33061:3306'
     environment:
-      MYSQL_USER: fitlog
-      MYSQL_PASSWORD: fitlog
-      MYSQL_DATABASE: fitlog
-      MYSQL_ROOT_PASSWORD: fitlog
+      MYSQL_USER: locly
+      MYSQL_PASSWORD: locly
+      MYSQL_DATABASE: locly
+      MYSQL_ROOT_PASSWORD: locly
       TZ: 'Asia/Seoul'
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql

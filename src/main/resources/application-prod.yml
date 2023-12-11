@@ -2,14 +2,14 @@ spring:
   datasource:
     writer:
       hikari:
-        jdbc-url: jdbc:mysql://${DB_WRITER_HOST}:${DB_WRITER_PORT}/fitlog?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+        jdbc-url: jdbc:mysql://${DB_WRITER_HOST}:${DB_WRITER_PORT}/locly?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
         username: ${DB_WRITER_USERNAME}
         password: ${DB_WRITER_PASSWORD}
         pool-name: 'read-write-pool'
         driver-class-name: com.mysql.cj.jdbc.Driver
     reader:
       hikari:
-        jdbc-url: jdbc:mysql://${DB_WRITER_HOST}:${DB_WRITER_PORT}/fitlog?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+        jdbc-url: jdbc:mysql://${DB_WRITER_HOST}:${DB_WRITER_PORT}/locly?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
         username: ${DB_READER_USERNAME}
         password: ${DB_READER_PASSWORD}
         pool-name: 'read-pool'
@@ -24,7 +24,7 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
-    url: jdbc:mysql://${DB_WRITER_HOST}:${DB_WRITER_PORT}/fitlog?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://${DB_WRITER_HOST}:${DB_WRITER_PORT}/locly?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
     user: ${DB_WRITER_USERNAME}
     password: ${DB_WRITER_PASSWORD}
     locations: classpath:db/migration

@@ -1,1 +1,1 @@
-rootProject.name = "fitlog"
+rootProject.name = "locly"

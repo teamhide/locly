@@ -18,7 +18,7 @@ allOpen {
     annotation("jakarta.persistence.Embeddable")
 }
 
-group = "com.fitlog"
+group = "com.locly"
 version = "0.0.1"
 
 java {
@@ -146,8 +146,8 @@ tasks.jacocoTestCoverageVerification {
             }
             classDirectories.setFrom(sourceSets.main.get().output.asFileTree)
             excludes = listOf(
-                "com.fitlog.fitlog.FitlogApplicationKt",
-                "com.fitlog.fitlog.common.healthcheck**",
+                "com.locly.locly.LoclyApplicationKt",
+                "com.locly.locly.common.healthcheck**",
             ) + queryDslClasses
         }
     }

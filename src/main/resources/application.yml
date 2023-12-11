@@ -12,16 +12,16 @@ spring:
   datasource:
     writer:
       hikari:
-        jdbc-url: jdbc:mysql://localhost:33061/fitlog?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
-        username: fitlog
-        password: fitlog
+        jdbc-url: jdbc:mysql://localhost:33061/locly?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+        username: locly
+        password: locly
         pool-name: 'read-write-pool'
         driver-class-name: com.mysql.cj.jdbc.Driver
     reader:
       hikari:
-        jdbc-url: jdbc:mysql://localhost:33061/fitlog?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
-        username: fitlog
-        password: fitlog
+        jdbc-url: jdbc:mysql://localhost:33061/locly?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+        username: locly
+        password: locly
         pool-name: 'read-pool'
         driver-class-name: com.mysql.cj.jdbc.Driver
         read-only: true
@@ -34,9 +34,9 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
-    url: jdbc:mysql://localhost:33061/fitlog?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
-    user: fitlog
-    password: fitlog
+    url: jdbc:mysql://localhost:33061/locly?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+    user: locly
+    password: locly
     locations: classpath:db/migration
 jwt:
   secret-key: hidehidehidehidehidehidehidehidehide

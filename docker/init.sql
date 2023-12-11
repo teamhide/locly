@@ -1,2 +1,2 @@
-CREATE DATABASE fitlog_test;
-GRANT ALL PRIVILEGES ON fitlog_test.* TO fitlog@'%' WITH GRANT OPTION;
+CREATE DATABASE locly_test;
+GRANT ALL PRIVILEGES ON locly_test.* TO locly@'%' WITH GRANT OPTION;
