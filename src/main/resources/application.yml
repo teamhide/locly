@@ -42,5 +42,7 @@ spring:
     redis:
       host: localhost
       port: 63792
+    mongodb:
+      uri: mongodb://locly:locly@localhost:27017/locly?authSource=admin
 jwt:
   secret-key: hidehidehidehidehidehidehidehidehide
