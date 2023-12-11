@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.stereotype.Component
 import org.springframework.util.StreamUtils
-import org.springframework.util.StringUtils
 import org.springframework.web.filter.OncePerRequestFilter
 import org.springframework.web.util.ContentCachingRequestWrapper
 import org.springframework.web.util.ContentCachingResponseWrapper
@@ -18,7 +17,11 @@ private val logger = KotlinLogging.logger { }
 
 @Component
 class RequestLogFilter : OncePerRequestFilter() {
-    override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
+    override fun doFilterInternal(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        filterChain: FilterChain,
+    ) {
         val cachedRequest = ContentCachingRequestWrapper(request)
         val cachedResponse = ContentCachingResponseWrapper(response)
 
@@ -32,44 +35,36 @@ class RequestLogFilter : OncePerRequestFilter() {
             val method = request.method
             val requestURI = request.requestURI
             val queryString = request.queryString
-            val formattedQueryString = if (StringUtils.hasText(queryString)) {
-                "?$queryString"
-            } else {
-                ""
-            }
+            val formattedQueryString = queryString?.takeIf { it.isNotEmpty() }?.let { "?$it" } ?: ""
             val requestBody = getRequestBody(request)
-
-            if (requestBody.isEmpty()) {
-                logger.info { "Request | $method $requestURI$formattedQueryString" }
-            } else {
-                logger.info { "Request | $method $requestURI$formattedQueryString | body = $requestBody" }
+            val logMessage = buildString {
+                append("Request | $method $requestURI$formattedQueryString")
+                if (requestBody.isNotEmpty()) {
+                    append(" | body = $requestBody")
+                }
             }
+
+            logger.info { logMessage }
         }
 
         fun logResponse(request: ContentCachingRequestWrapper, response: ContentCachingResponseWrapper) {
             val method = request.method
             val requestURI = request.requestURI
             val queryString = request.queryString
-            val formattedQueryString = if (StringUtils.hasText(queryString)) {
-                "?$queryString"
-            } else {
-                ""
-            }
+            val formattedQueryString = queryString?.takeIf { it.isNotEmpty() }?.let { "?$it" } ?: ""
             val statusCode = response.status
             val responseBody = getResponseBody(response)
+            val logMessage = buildString {
+                append("Response | $method $requestURI$formattedQueryString | $statusCode")
+                if (responseBody.isNotEmpty()) {
+                    append(" | body = $responseBody")
+                }
+            }
 
             if (statusCode < 500) {
-                if (responseBody.isEmpty()) {
-                    logger.info { "Response | $method $requestURI$formattedQueryString | $statusCode" }
-                } else {
-                    logger.info { "Response | $method $requestURI$formattedQueryString | $statusCode | body = $responseBody" }
-                }
+                logger.info { logMessage }
             } else {
-                if (responseBody.isEmpty()) {
-                    logger.error { "Response | $method $requestURI$formattedQueryString | $statusCode" }
-                } else {
-                    logger.error { "Response | $method $requestURI$formattedQueryString | $statusCode | body = $responseBody" }
-                }
+                logger.error { logMessage }
             }
         }
 
