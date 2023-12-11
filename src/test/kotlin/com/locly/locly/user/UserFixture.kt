@@ -2,11 +2,16 @@ package com.locly.locly.user
 
 import com.locly.locly.user.adapter.`in`.v1.RegisterUserRequest
 import com.locly.locly.user.adapter.out.persistence.jpa.UserEntity
+import com.locly.locly.user.adapter.out.persistence.jpa.UserFriendEntity
+import com.locly.locly.user.application.port.`in`.AddFriendCommand
 import com.locly.locly.user.application.port.`in`.RegisterUserCommand
 import com.locly.locly.user.domain.model.User
 import com.locly.locly.user.domain.vo.Location
 import com.locly.locly.user.domain.vo.UserStatus
 import java.time.LocalDateTime
+
+const val EXPIRED_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDE3NTk5MTAsImV4cCI6MTcwMTc1OTk5NywidXNlcl9pZCI6MX0.a3gyosESbCJ_-adDmkPUUa7hrdx2zQe1xebUV252jb8"
+const val USER_ID_1_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDE3NjQ3NzMsInVzZXJfaWQiOjF9.o2l9ZN4aCGhYMEslxwv6rtc-y7Oi8G_nz9OlfNk7kJk"
 
 fun makeUserEntity(
     password: String = "password",
@@ -80,4 +85,18 @@ fun makeRegisterUserRequest(
         lat = lat,
         lng = lng,
     )
+}
+
+fun makeUserFriendEntity(
+    userId: Long = 1L,
+    friendUserId: Long = 2L,
+): UserFriendEntity {
+    return UserFriendEntity(userId = userId, friendUserId = friendUserId)
+}
+
+fun makeAddFriendCommand(
+    userId: Long,
+    friendUserId: Long,
+): AddFriendCommand {
+    return AddFriendCommand(userId = userId, friendUserId = friendUserId)
 }

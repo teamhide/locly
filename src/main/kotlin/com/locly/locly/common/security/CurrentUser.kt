@@ -3,7 +3,7 @@ package com.locly.locly.common.security
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
-class CurrentUser(private val id: Long) : UserDetails {
+class CurrentUser(val id: Long) : UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return mutableListOf()
     }

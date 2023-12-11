@@ -1,6 +1,7 @@
 package com.locly.locly.test
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.locly.locly.common.security.JwtAuthenticationFilter
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -21,6 +22,9 @@ abstract class BaseIntegrationTest {
     @Autowired
     lateinit var objectMapper: ObjectMapper
 
+    @Autowired
+    lateinit var jwtAuthenticationFilter: JwtAuthenticationFilter
+
     lateinit var mockMvc: MockMvc
 
     @BeforeEach
@@ -30,6 +34,7 @@ abstract class BaseIntegrationTest {
     ) {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
             .addFilter<DefaultMockMvcBuilder>(CharacterEncodingFilter("UTF-8", true))
+            .addFilter<DefaultMockMvcBuilder>(jwtAuthenticationFilter)
             .alwaysDo<DefaultMockMvcBuilder>(MockMvcResultHandlers.print())
             .apply<DefaultMockMvcBuilder>(
                 MockMvcRestDocumentation.documentationConfiguration(

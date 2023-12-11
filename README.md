@@ -5,9 +5,9 @@ locly is a user location sharing service and has similar functions to Zenly.
 ## 요구사항
 
 ### 유저
-- [ ] 회원가입한다
+- [x] 회원가입한다
 - [ ] 프로필을 수정한다
-- [ ] 다른 유저를 친구로 추가한다
+- [x] 다른 유저를 친구로 추가한다
   - 유저 당 최대 친구 수는 20명이다
 
 ### 위치
