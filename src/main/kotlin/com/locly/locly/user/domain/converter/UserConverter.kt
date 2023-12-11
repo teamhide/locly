@@ -10,6 +10,7 @@ class UserConverter {
             with(user) {
                 return User(
                     id = id,
+                    password = password,
                     email = email,
                     nickname = nickname,
                     status = status,
@@ -23,6 +24,7 @@ class UserConverter {
             with(user) {
                 return UserEntity(
                     id = id,
+                    password = password,
                     email = email,
                     nickname = nickname,
                     status = status,

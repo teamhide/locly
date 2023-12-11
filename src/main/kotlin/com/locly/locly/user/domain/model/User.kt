@@ -5,6 +5,7 @@ import com.locly.locly.user.domain.vo.UserStatus
 import java.time.LocalDateTime
 
 class User(
+    val password: String,
     val email: String,
     val nickname: String,
     val status: UserStatus,

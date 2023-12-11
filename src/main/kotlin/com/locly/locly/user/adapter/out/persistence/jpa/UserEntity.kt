@@ -11,6 +11,9 @@ import jakarta.persistence.Id
 import java.time.LocalDateTime
 
 class UserEntity(
+    @Column(name = "password", nullable = false)
+    val password: String,
+
     @Column(name = "email", nullable = false)
     val email: String,
 

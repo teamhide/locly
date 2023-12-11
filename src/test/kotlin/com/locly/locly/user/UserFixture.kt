@@ -7,6 +7,7 @@ import com.locly.locly.user.domain.vo.UserStatus
 import java.time.LocalDateTime
 
 fun makeUserEntity(
+    password: String = "password",
     email: String = "email",
     nickname: String = "nickname",
     status: UserStatus = UserStatus.ONLINE,
@@ -16,6 +17,7 @@ fun makeUserEntity(
     id: Long = 1L,
 ): UserEntity {
     return UserEntity(
+        password = password,
         email = email,
         nickname = nickname,
         status = status,
@@ -27,6 +29,7 @@ fun makeUserEntity(
 }
 
 fun makeUser(
+    password: String = "password",
     email: String = "email",
     nickname: String = "nickname",
     status: UserStatus = UserStatus.ONLINE,
@@ -35,6 +38,7 @@ fun makeUser(
     id: Long = 1L,
 ): User {
     return User(
+        password = password,
         email = email,
         nickname = nickname,
         status = status,

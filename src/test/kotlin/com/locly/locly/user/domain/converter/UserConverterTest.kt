@@ -15,6 +15,7 @@ internal class UserConverterTest : StringSpec({
 
         // Then
         sut.id shouldBe user.id
+        sut.password shouldBe user.password
         sut.email shouldBe user.email
         sut.nickname shouldBe user.nickname
         sut.status shouldBe user.status
@@ -32,6 +33,7 @@ internal class UserConverterTest : StringSpec({
 
         // Then
         sut.id shouldBe user.id
+        sut.password shouldBe user.password
         sut.email shouldBe user.email
         sut.nickname shouldBe user.nickname
         sut.status shouldBe user.status

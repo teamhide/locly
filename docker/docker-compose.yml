@@ -23,5 +23,16 @@ services:
     restart: always
     ports:
       - "63792:6379"
+
+  mongodb:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: locly
+      MONGO_INITDB_ROOT_PASSWORD: locly
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb:/data/db
 volumes:
   mysqldb:
+  mongodb:
