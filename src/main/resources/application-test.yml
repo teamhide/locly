@@ -28,3 +28,7 @@ spring:
     user: locly
     password: locly
     locations: classpath:db/migration
+  data:
+    redis:
+      host: localhost
+      port: 63792
