@@ -4,7 +4,7 @@ import com.locly.locly.user.adapter.out.persistence.jpa.UserEntity
 import com.locly.locly.user.domain.model.User
 import com.locly.locly.user.domain.vo.Location
 
-class UserConverter {
+class UserConverter private constructor() {
     companion object {
         fun from(user: UserEntity): User {
             with(user) {

@@ -20,7 +20,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
     open-in-view: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
   flyway:
     enabled: true
     baseline-on-migrate: true

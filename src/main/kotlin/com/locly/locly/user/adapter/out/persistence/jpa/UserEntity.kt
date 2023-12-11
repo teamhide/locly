@@ -3,13 +3,23 @@ package com.locly.locly.user.adapter.out.persistence.jpa
 import com.locly.locly.common.config.database.BaseTimestampEntity
 import com.locly.locly.user.domain.vo.UserStatus
 import jakarta.persistence.Column
+import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.Index
+import jakarta.persistence.Table
 import java.time.LocalDateTime
 
+@Entity
+@Table(
+    name = "user",
+    indexes = [
+        Index(name = "idx__nickname_email", columnList = "nickname, email"),
+    ]
+)
 class UserEntity(
     @Column(name = "password", nullable = false)
     val password: String,

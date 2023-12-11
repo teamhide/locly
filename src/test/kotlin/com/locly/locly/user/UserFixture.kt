@@ -1,6 +1,8 @@
 package com.locly.locly.user
 
+import com.locly.locly.user.adapter.`in`.v1.RegisterUserRequest
 import com.locly.locly.user.adapter.out.persistence.jpa.UserEntity
+import com.locly.locly.user.application.port.`in`.RegisterUserCommand
 import com.locly.locly.user.domain.model.User
 import com.locly.locly.user.domain.vo.Location
 import com.locly.locly.user.domain.vo.UserStatus
@@ -45,5 +47,37 @@ fun makeUser(
         location = location,
         stayedAt = stayedAt,
         id = id,
+    )
+}
+
+fun makeRegisterUserCommand(
+    password: String = "password",
+    email: String = "hide@hide.net",
+    nickname: String = "hide",
+    lat: Double = 37.1234,
+    lng: Double = 127.1234,
+): RegisterUserCommand {
+    return RegisterUserCommand(
+        password = password,
+        email = email,
+        nickname = nickname,
+        lat = lat,
+        lng = lng,
+    )
+}
+
+fun makeRegisterUserRequest(
+    password: String = "password",
+    email: String = "hide@hide.net",
+    nickname: String = "hide",
+    lat: Double = 37.1234,
+    lng: Double = 127.1234,
+): RegisterUserRequest {
+    return RegisterUserRequest(
+        password = password,
+        email = email,
+        nickname = nickname,
+        lat = lat,
+        lng = lng,
     )
 }
