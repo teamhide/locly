@@ -1,20 +1,27 @@
 package com.locly.locly.common.config
 
+import com.locly.locly.location.application.service.GetFriendLocationWebSocketHandler
+import com.locly.locly.location.application.service.UpdateLocationWebSocketHandler
 import org.springframework.context.annotation.Configuration
-import org.springframework.messaging.simp.config.MessageBrokerRegistry
-import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker
-import org.springframework.web.socket.config.annotation.StompEndpointRegistry
-import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer
+import org.springframework.web.socket.config.annotation.EnableWebSocket
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
+import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor
 
 @Configuration
-@EnableWebSocketMessageBroker
-class WebSocketConfig : WebSocketMessageBrokerConfigurer {
-    override fun configureMessageBroker(registry: MessageBrokerRegistry) {
-        registry.enableSimpleBroker("/topic")
-        registry.setApplicationDestinationPrefixes("/app")
-    }
-
-    override fun registerStompEndpoints(registry: StompEndpointRegistry) {
-        registry.addEndpoint("/gs-guide-websocket")
+@EnableWebSocket
+class WebSocketConfig(
+    private val updateLocationWebSocketHandler: UpdateLocationWebSocketHandler,
+    private val getFriendLocationWebSocketHandler: GetFriendLocationWebSocketHandler,
+) : WebSocketConfigurer {
+    override fun registerWebSocketHandlers(registry: WebSocketHandlerRegistry) {
+        registry.apply {
+            addHandler(updateLocationWebSocketHandler, "/update-location")
+                .setAllowedOrigins("*")
+                .addInterceptors(HttpSessionHandshakeInterceptor())
+            addHandler(getFriendLocationWebSocketHandler, "/request-location")
+                .setAllowedOrigins("*")
+                .addInterceptors(HttpSessionHandshakeInterceptor())
+        }
     }
 }

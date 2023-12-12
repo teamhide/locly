@@ -7,6 +7,8 @@ spring:
       test: clients-test
       staging: clients-staging
       prod: clients-prod
+  mvc:
+    static-path-pattern: /test/**
   main:
     banner-mode: off
   datasource:

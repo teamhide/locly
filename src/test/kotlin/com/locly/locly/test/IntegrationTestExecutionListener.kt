@@ -3,34 +3,25 @@ package com.locly.locly.test
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.test.context.TestContext
 import org.springframework.test.context.support.AbstractTestExecutionListener
-import org.springframework.test.jdbc.JdbcTestUtils
-import org.springframework.transaction.TransactionStatus
-import org.springframework.transaction.support.TransactionCallbackWithoutResult
-import org.springframework.transaction.support.TransactionTemplate
 import java.sql.DatabaseMetaData
 import java.sql.SQLException
 
 class IntegrationTestExecutionListener : AbstractTestExecutionListener() {
 
-    override fun beforeTestMethod(testContext: TestContext) {
+    override fun afterTestMethod(testContext: TestContext) {
         val jdbcTemplate = getJdbcTemplate(testContext)
-        val transactionTemplate = getTransactionTemplate(testContext)
+        val tables = getAllTables(jdbcTemplate)
 
-        truncateAllTables(jdbcTemplate, transactionTemplate)
+        truncateAll(tables = tables, jdbcTemplate = jdbcTemplate)
     }
 
-    private fun truncateAllTables(jdbcTemplate: JdbcTemplate, transactionTemplate: TransactionTemplate) {
-        transactionTemplate.execute(object : TransactionCallbackWithoutResult() {
-            override fun doInTransactionWithoutResult(status: TransactionStatus) {
-                jdbcTemplate.execute("SET FOREIGN_KEY_CHECKS = 0;")
-                JdbcTestUtils.deleteFromTables(jdbcTemplate, *getAllTables(jdbcTemplate).toTypedArray())
-                jdbcTemplate.execute("SET FOREIGN_KEY_CHECKS = 1;")
+    private fun truncateAll(tables: List<String>, jdbcTemplate: JdbcTemplate) {
+        tables.forEach {
+            table ->
+            run {
+                jdbcTemplate.execute("TRUNCATE TABLE $table")
             }
-        })
-    }
-
-    private fun getTransactionTemplate(testContext: TestContext): TransactionTemplate {
-        return testContext.applicationContext.getBean(TransactionTemplate::class.java)
+        }
     }
 
     private fun getJdbcTemplate(testContext: TestContext): JdbcTemplate {

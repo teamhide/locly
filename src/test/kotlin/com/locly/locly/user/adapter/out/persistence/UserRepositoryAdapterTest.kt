@@ -1,6 +1,7 @@
 package com.locly.locly.user.adapter.out.persistence
 
 import com.locly.locly.user.adapter.out.persistence.jpa.UserRepository
+import com.locly.locly.user.domain.vo.Location
 import com.locly.locly.user.makeUser
 import com.locly.locly.user.makeUserEntity
 import io.kotest.core.spec.style.StringSpec
@@ -52,5 +53,42 @@ class UserRepositoryAdapterTest : StringSpec({
         sut.location.lng shouldBe userEntity.lng
         sut.stayedAt shouldBe userEntity.stayedAt
         verify(exactly = 1) { userRepository.save(any()) }
+    }
+
+    "유저 ID목록에 해당하는 로우를 리턴한다" {
+        // Given
+        val userIds = arrayListOf(1L, 2L)
+        val userEntity = makeUserEntity()
+        every { userRepository.findAllByIdIn(userIds) } returns arrayListOf(userEntity)
+
+        // When
+        val sut = repositoryAdapter.findAllByIdIn(userIds = userIds)
+
+        // Then
+        sut.size shouldBe 1
+        val user = sut[0]
+        user.id shouldBe userEntity.id
+        user.password shouldBe userEntity.password
+        user.email shouldBe userEntity.email
+        user.nickname shouldBe userEntity.nickname
+        user.status shouldBe userEntity.status
+        user.location.lat shouldBe userEntity.lat
+        user.location.lng shouldBe userEntity.lng
+        user.stayedAt shouldBe userEntity.stayedAt
+    }
+
+    "id를 기반으로 유저의 위치를 업데이트한다" {
+        // Given
+        val userId = 1L
+        val lat = 37.1234
+        val lng = 120.1234
+        every { userRepository.updateLocationById(any(), any(), any()) } returns 1L
+
+        // When
+        val count = repositoryAdapter.updateLocationById(userId = userId, location = Location(lat = lat, lng = lng))
+
+        // Then
+        count shouldBe 1
+        verify(exactly = 1) { userRepository.updateLocationById(userId = userId, lat = lat, lng = lng) }
     }
 })

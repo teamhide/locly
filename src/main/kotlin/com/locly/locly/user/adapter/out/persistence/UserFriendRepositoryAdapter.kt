@@ -21,6 +21,11 @@ class UserFriendRepositoryAdapter(
         return friends.size < count
     }
 
+    override fun findAllFriendUserIdsByUserId(userId: Long): List<Long> {
+        val friends = userFriendRepository.findAllByUserId(userId = userId)
+        return friends.map { it.friendUserId }
+    }
+
     override fun save(userId: Long, friendUserId: Long) {
         val userFriendEntity = UserFriendEntity(userId = userId, friendUserId = friendUserId)
         userFriendRepository.save(userFriendEntity)

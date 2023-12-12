@@ -7,4 +7,6 @@ interface UserFriendRepository : JpaRepository<UserFriendEntity, Long> {
     fun existsByUserIdAndFriendUserId(userId: Long, friendUserId: Long): Boolean
 
     fun findAllByUserId(userId: Long, pageable: Pageable): List<UserFriendEntity>
+
+    fun findAllByUserId(userId: Long): List<UserFriendEntity>
 }
