@@ -46,6 +46,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.springframework.security:spring-security-messaging:6.2.0")
+    implementation("org.springframework.kafka:spring-kafka")
     kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
     kapt("jakarta.annotation:jakarta.annotation-api")
     kapt("jakarta.persistence:jakarta.persistence-api")
@@ -61,6 +62,7 @@ dependencies {
     testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
     testImplementation("io.mockk:mockk:1.13.3")
     testImplementation("com.ninja-squad:springmockk:4.0.0")
+    testImplementation("org.springframework.kafka:spring-kafka-test")
 }
 
 tasks.withType<KotlinCompile> {

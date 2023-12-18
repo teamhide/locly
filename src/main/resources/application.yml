@@ -46,5 +46,12 @@ spring:
       port: 63792
     mongodb:
       uri: mongodb://locly:locly@localhost:27017/locly?authSource=admin
+  kafka:
+    schema:
+      registry:
+        url: localhost:8081
+    bootstrap-servers: localhost:9092
+    topic:
+      auction-registered: auction-registered
 jwt:
   secret-key: hidehidehidehidehidehidehidehidehide
