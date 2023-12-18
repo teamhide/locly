@@ -1,6 +1,7 @@
 package com.locly.locly.location.application.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.locly.locly.common.config.websocket.HandshakeWithAuthInterceptor
 import com.locly.locly.location.application.port.`in`.GetLocationsQuery
 import com.locly.locly.location.application.port.`in`.GetLocationsUseCase
 import com.locly.locly.location.domain.model.RequestFriendLocation
@@ -20,6 +21,13 @@ class GetFriendLocationWebSocketHandler(
     private val objectMapper: ObjectMapper,
 ) : TextWebSocketHandler() {
     override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
+        if (!HandshakeWithAuthInterceptor.isUserIdExist(session = session)) {
+            logger.error { "UpdateLocationWebSocketHandler | Current user id is null" }
+            return
+        }
+
+        val userId = session.attributes[HandshakeWithAuthInterceptor.SESSION_USER_ID_KEY]
+
         val request: RequestFriendLocation
         try {
             request = objectMapper.readValue(message.asBytes(), RequestFriendLocation::class.java)
@@ -33,7 +41,7 @@ class GetFriendLocationWebSocketHandler(
             return
         }
 
-        val query = GetLocationsQuery(userId = request.userId)
+        val query = GetLocationsQuery(userId = userId as Long)
         val locations = getLocationsUseCase.execute(query = query)
         session.sendMessage(TextMessage(objectMapper.writeValueAsString(locations)))
     }
