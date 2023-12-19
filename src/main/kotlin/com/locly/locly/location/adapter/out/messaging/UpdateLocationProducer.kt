@@ -1,4 +1,4 @@
-package com.locly.locly.location.adapter.out.external.kafka
+package com.locly.locly.location.adapter.out.messaging
 
 import com.locly.locly.location.domain.model.UpdateUserLocation
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -7,7 +7,6 @@ import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Component
 
 private val logger = KotlinLogging.logger { }
-
 @Component
 class UpdateLocationProducer(
     private val kafkaTemplate: KafkaTemplate<String, Any>,

@@ -2,9 +2,7 @@ package com.locly.locly.location.application.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.locly.locly.common.config.websocket.HandshakeWithAuthInterceptor
-import com.locly.locly.common.config.websocket.HandshakeWithAuthInterceptor.Companion.SESSION_USER_ID_KEY
-import com.locly.locly.location.application.port.`in`.UpdateLocationCommand
-import com.locly.locly.location.application.port.`in`.UpdateLocationUseCase
+import com.locly.locly.location.application.port.out.MessagingPort
 import com.locly.locly.location.domain.model.UpdateUserLocation
 import com.locly.locly.location.domain.vo.LocationRequestType
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -18,16 +16,14 @@ private val logger = KotlinLogging.logger { }
 
 @Component
 class UpdateLocationWebSocketHandler(
-    private val updateLocationUseCase: UpdateLocationUseCase,
     private val objectMapper: ObjectMapper,
+    private val messagingPort: MessagingPort,
 ) : TextWebSocketHandler() {
     override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
         if (!HandshakeWithAuthInterceptor.isUserIdExist(session = session)) {
             logger.error { "UpdateLocationWebSocketHandler | Current user id is null" }
             return
         }
-
-        val userId = session.attributes[SESSION_USER_ID_KEY]
 
         val request: UpdateUserLocation
         try {
@@ -41,9 +37,12 @@ class UpdateLocationWebSocketHandler(
             logger.error { "UpdateLocationWebSocketHandler | Invalid type=${request.type}" }
             return
         }
-        val command = UpdateLocationCommand(userId = userId as Long, lat = request.lat, lng = request.lng)
-        updateLocationUseCase.execute(command = command)
 
-        // TODO: 카프카 메시지 전송 코드 추가
+        val userId = session.attributes[HandshakeWithAuthInterceptor.SESSION_USER_ID_KEY]
+        if (userId != request.userId) {
+            logger.error { "UpdateLocationWebSocketHandler | Auth error. userId=$userId, requestUserId=${request.userId}" }
+        }
+
+        messagingPort.sendLocationUpdated(message = request)
     }
 }
