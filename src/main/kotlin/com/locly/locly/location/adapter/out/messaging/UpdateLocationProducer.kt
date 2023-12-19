@@ -2,11 +2,13 @@ package com.locly.locly.location.adapter.out.messaging
 
 import com.locly.locly.location.domain.model.UpdateUserLocation
 import io.github.oshai.kotlinlogging.KotlinLogging
+import org.apache.kafka.clients.producer.ProducerRecord
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Component
 
 private val logger = KotlinLogging.logger { }
+
 @Component
 class UpdateLocationProducer(
     private val kafkaTemplate: KafkaTemplate<String, Any>,
@@ -15,7 +17,8 @@ class UpdateLocationProducer(
 ) {
 
     fun send(key: String, message: UpdateUserLocation) {
-        kafkaTemplate.send(topicName, key, message)
+        val record = ProducerRecord<String, Any>(topicName, key, message)
+        kafkaTemplate.send(record)
             .whenComplete { result, ex ->
                 if (ex == null) {
                     logger.info { "Sent message=[$message] with offset=[${result.recordMetadata.offset()}]" }

@@ -133,6 +133,7 @@ tasks.jacocoTestReport {
                     exclude(
                         "**/*Application*",
                         "**/Q*Entity*",
+                        "**/healthcheck/CustomHealthIndicator*",
                     )
                 }
             }
@@ -148,7 +149,7 @@ tasks.jacocoTestCoverageVerification {
             limit {
                 counter = "LINE"
                 value = "COVEREDRATIO"
-                minimum = "1.00".toBigDecimal()
+                minimum = "1.0".toBigDecimal()
             }
             classDirectories.setFrom(sourceSets.main.get().output.asFileTree)
             excludes = listOf(

@@ -32,3 +32,13 @@ spring:
     redis:
       host: localhost
       port: 63792
+    mongodb:
+      uri: mongodb://locly:locly@localhost:27017/locly_test?authSource=admin
+  kafka:
+    topic:
+      location-updated: location-updated
+    producer:
+      bootstrap-servers: localhost:9092
+    consumer:
+      auto-offset-reset: earliest
+      bootstrap-servers: localhost:9092
