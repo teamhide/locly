@@ -32,6 +32,8 @@ class AuthIgnorePaths private constructor() {
             // 테스트 용도 웹소켓 엔드포인트
             conditions.add(AuthIgnorePath(authType = AuthType.JWT, method = HttpMethod.GET, path = "/test/index.html"))
             conditions.add(AuthIgnorePath(authType = AuthType.JWT, method = HttpMethod.GET, path = "/test/app.js"))
+            conditions.add(AuthIgnorePath(authType = AuthType.JWT, method = HttpMethod.GET, path = "/test/produce"))
+            conditions.add(AuthIgnorePath(authType = AuthType.JWT, method = HttpMethod.GET, path = "/test/consume"))
 
             addToIgnorePaths(conditions = conditions)
             return conditions.groupBy { it.authType }

@@ -32,3 +32,10 @@ spring:
     redis:
       host: ${REDIS_HOST}
       port: ${REDIS_PORT}
+  kafka:
+    schema:
+      registry:
+        url: ${KAFKA_URL}
+    bootstrap-servers: ${BOOTSTRAP_SERVERS}
+    topic:
+      location-updated: ${TOPIC_LOCATION_UPDATED}

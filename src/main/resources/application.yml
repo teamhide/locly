@@ -52,6 +52,6 @@ spring:
         url: localhost:8081
     bootstrap-servers: localhost:9092
     topic:
-      auction-registered: auction-registered
+      location-updated: location-updated
 jwt:
   secret-key: hidehidehidehidehidehidehidehidehide
