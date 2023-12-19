@@ -1,8 +1,11 @@
 package com.locly.locly.location.adapter.`in`.consumer
 
+import com.locly.locly.location.application.port.`in`.SaveUserLocationHistoryCommand
+import com.locly.locly.location.application.port.`in`.SaveUserLocationHistoryUseCase
 import com.locly.locly.location.application.port.`in`.UpdateLocationCommand
 import com.locly.locly.location.application.port.`in`.UpdateLocationUseCase
 import com.locly.locly.location.domain.model.UpdateUserLocation
+import com.locly.locly.location.domain.vo.UserLocation
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Component
@@ -12,6 +15,7 @@ private val logger = KotlinLogging.logger { }
 @Component
 class UpdateLocationConsumer(
     private val updateLocationUseCase: UpdateLocationUseCase,
+    private val saveUserLocationHistoryUseCase: SaveUserLocationHistoryUseCase,
 ) {
     @KafkaListener(
         topics = ["\${spring.kafka.topic.location-updated}"],
@@ -20,13 +24,23 @@ class UpdateLocationConsumer(
     )
     fun listen(message: UpdateUserLocation) {
         logger.info { "Received: $message" }
-        val command = message.let {
+        val updateLocationCommand = message.let {
             UpdateLocationCommand(
                 userId = it.userId,
                 lat = it.lat,
                 lng = it.lng,
             )
         }
-        updateLocationUseCase.execute(command = command)
+        updateLocationUseCase.execute(command = updateLocationCommand)
+
+        val saveHistoryCommand = message.let {
+            SaveUserLocationHistoryCommand(
+                userId = it.userId,
+                location = UserLocation(
+                    lat = it.lat, lng = it.lng
+                ),
+            )
+        }
+        saveUserLocationHistoryUseCase.execute(command = saveHistoryCommand)
     }
 }

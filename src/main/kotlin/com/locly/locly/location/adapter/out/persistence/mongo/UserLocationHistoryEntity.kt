@@ -5,7 +5,6 @@ import com.locly.locly.location.domain.vo.UserLocation
 import jakarta.persistence.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.Field
-import java.time.LocalDateTime
 
 @Document(collection = "user_location_history")
 class UserLocationHistoryEntity(
@@ -14,9 +13,6 @@ class UserLocationHistoryEntity(
 
     @Field(name = "location")
     val location: UserLocation,
-
-    @Field(name = "stayed_at")
-    val stayedAt: LocalDateTime,
 
     @Id
     val id: String? = null,

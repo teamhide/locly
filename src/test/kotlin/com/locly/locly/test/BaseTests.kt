@@ -8,6 +8,7 @@ import jakarta.persistence.EntityManager
 import jakarta.persistence.PersistenceContext
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -50,6 +51,12 @@ class RepositoryTestConfig(
 @ImportAutoConfiguration(DataSourceConfig::class)
 @Import(RepositoryTestConfig::class, SpringDataJpaConfig::class)
 annotation class RepositoryTest
+
+@Target(AnnotationTarget.CLASS)
+@Retention(AnnotationRetention.RUNTIME)
+@TestEnvironment
+@DataMongoTest
+annotation class MongoRepositoryTest
 
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)

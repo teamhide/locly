@@ -11,7 +11,6 @@ class UserLocationHistoryConverter {
                     id = id,
                     location = location,
                     userId = userId,
-                    stayedAt = stayedAt,
                 )
             }
         }
@@ -22,7 +21,6 @@ class UserLocationHistoryConverter {
                     id = id,
                     location = location,
                     userId = userId,
-                    stayedAt = stayedAt,
                 )
             }
         }
