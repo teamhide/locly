@@ -8,10 +8,10 @@ import org.springframework.kafka.config.TopicBuilder
 import org.springframework.kafka.core.KafkaAdmin
 
 @Configuration
-class KafkaTopicConfig {
+class KafkaTopicConfig(
     @Value("\${spring.kafka.bootstrap-servers}")
-    lateinit var bootstrapServers: String
-
+    private val bootstrapServers: String,
+) {
     @Bean
     fun kafkaAdmin(): KafkaAdmin {
         val configs = mapOf<String, Any>(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG to bootstrapServers)

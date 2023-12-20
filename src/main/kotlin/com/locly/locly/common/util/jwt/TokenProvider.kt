@@ -14,7 +14,6 @@ import java.util.Date
 
 const val TWELVE_HOURS_TO_SECONDS = 86400
 const val USER_ID_KEY = "user_id"
-const val HEADER_PREFIX = "Bearer"
 
 class TokenProvider(
     private val secretKey: String,

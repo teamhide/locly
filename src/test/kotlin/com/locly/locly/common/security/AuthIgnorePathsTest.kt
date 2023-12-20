@@ -15,6 +15,11 @@ class AuthIgnorePathsTest : StringSpec({
         sut shouldBe false
     }
 
+    "특정 인증 타입에 아무런 엔드포인트가 저장되어있지 않으면 false가 반환된다" {
+        val sut = AuthIgnorePaths.contain(AuthType.INTERNAL, HttpMethod.DELETE, "/non-asd")
+        sut shouldBe false
+    }
+
     "제외 대상 엔드포인트는 true가 반환된다" {
         val sut = AuthIgnorePaths.contain(AuthType.JWT, HttpMethod.GET, "/actuator/health")
         sut shouldBe true

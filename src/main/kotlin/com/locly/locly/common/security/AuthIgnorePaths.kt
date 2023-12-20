@@ -4,7 +4,7 @@ import org.springframework.http.HttpMethod
 import org.springframework.util.AntPathMatcher
 
 enum class AuthType {
-    JWT
+    JWT, INTERNAL
 }
 
 data class AuthIgnorePath(val authType: AuthType, val method: HttpMethod, val path: String)

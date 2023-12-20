@@ -54,7 +54,21 @@ class GetFriendLocationWebSocketHandlerTest : StringSpec({
 
     "요청 타입이 REQUEST가 아니면 위치를 전달하지 않는다" {
         // Given
-        val requestMessage = RequestFriendLocation(type = LocationRequestType.UPDATE, userId = 2L)
+        val requestMessage = RequestFriendLocation(type = LocationRequestType.UPDATE, userId = 1L)
+        val message = TextMessage(objectMapper.writeValueAsString(requestMessage))
+        val session = mockk<WebSocketSession>()
+        every { session.attributes } returns mapOf("currentUserId" to 1L)
+
+        // When
+        handler.handleMessage(session, message)
+
+        // Then
+        verify(exactly = 0) { session.sendMessage(any()) }
+    }
+
+    "요청 유저와 대상 유저가 동일하지 않으면 위치를 전달하지 않는다" {
+        // Given
+        val requestMessage = RequestFriendLocation(type = LocationRequestType.REQUEST, userId = 2L)
         val message = TextMessage(objectMapper.writeValueAsString(requestMessage))
         val session = mockk<WebSocketSession>()
         every { session.attributes } returns mapOf("currentUserId" to 1L)
@@ -68,7 +82,7 @@ class GetFriendLocationWebSocketHandlerTest : StringSpec({
 
     "친구들의 위치를 전달한다" {
         // Given
-        val requestMessage = RequestFriendLocation(type = LocationRequestType.REQUEST, userId = 2L)
+        val requestMessage = RequestFriendLocation(type = LocationRequestType.REQUEST, userId = 1L)
         val message = TextMessage(objectMapper.writeValueAsString(requestMessage))
         val session = mockk<WebSocketSession>()
         every { session.attributes } returns mapOf("currentUserId" to 1L)

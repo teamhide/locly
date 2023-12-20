@@ -135,11 +135,12 @@ tasks.jacocoTestReport {
                     exclude(
                         "**/*Application*",
                         "**/Q*Entity*",
-                        "**/healthcheck/CustomHealthIndicator*",
+                        "**/healthcheck**",
                         "**/*logger*",
                         "**/*Logger*",
-                        "**/Logger.class",
-                        "**/logger.class"
+                        "**/**Logger**.class",
+                        "**/**logger**.class",
+                        "**logger*",
                     )
                 }
             }
@@ -160,11 +161,12 @@ tasks.jacocoTestCoverageVerification {
             classDirectories.setFrom(sourceSets.main.get().output.asFileTree)
             excludes = listOf(
                 "com.locly.locly.LoclyApplicationKt",
-                "com.locly.locly.common.healthcheck**",
+                "com.locly.locly.common.healthcheck*",
                 "**/*logger*",
                 "**/*Logger*",
-                "**/Logger.class",
-                "**/logger.class"
+                "**/**Logger**.class",
+                "**/**logger**.class",
+                "**logger*",
             ) + queryDslClasses
         }
     }

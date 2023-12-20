@@ -3,7 +3,7 @@ package com.locly.locly.location.domain.converter
 import com.locly.locly.location.adapter.out.persistence.mongo.UserLocationHistoryEntity
 import com.locly.locly.location.domain.model.UserLocationHistory
 
-class UserLocationHistoryConverter {
+class UserLocationHistoryConverter private constructor() {
     companion object {
         fun from(locationHistory: UserLocationHistoryEntity): UserLocationHistory {
             with(locationHistory) {

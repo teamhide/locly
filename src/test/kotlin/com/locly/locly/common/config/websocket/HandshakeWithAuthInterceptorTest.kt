@@ -19,7 +19,7 @@ class HandshakeWithAuthInterceptorTest : StringSpec({
         // Given
         val serverHttpRequest = mockkClass(ServletServerHttpRequest::class)
         val httpServletRequest = mockk<HttpServletRequest>()
-        every { httpServletRequest.getHeader(any()) } returns ""
+        every { httpServletRequest.getHeader(any()) } returns null
         every { serverHttpRequest.servletRequest } returns httpServletRequest
         val serverHttpResponse = mockk<ServerHttpResponse>()
         val webSocketHandler = mockk<WebSocketHandler>()

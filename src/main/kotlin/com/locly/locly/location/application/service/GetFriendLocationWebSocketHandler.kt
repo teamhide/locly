@@ -44,8 +44,14 @@ class GetFriendLocationWebSocketHandler(
             return
         }
 
+        if (userId != request.userId) {
+            logger.error { "GetFriendLocationWebSocketHandler | Auth error. userId=$userId, requestUserId=${request.userId}" }
+            return
+        }
+
         val query = GetLocationsQuery(userId = userId as Long)
         val locations = getLocationsUseCase.execute(query = query)
+
         session.sendMessage(TextMessage(objectMapper.writeValueAsString(locations)))
     }
 }
