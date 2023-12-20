@@ -6,4 +6,6 @@ interface GetUserFriendPersistencePort {
     fun countsByUserIdLessThan(userId: Long, count: Int): Boolean
 
     fun findAllFriendUserIdsByUserId(userId: Long): List<Long>
+
+    fun isFriendWith(userId: Long, friendUserId: Long): Boolean
 }

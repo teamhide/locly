@@ -26,6 +26,10 @@ class UserFriendRepositoryAdapter(
         return friends.map { it.friendUserId }
     }
 
+    override fun isFriendWith(userId: Long, friendUserId: Long): Boolean {
+        return userFriendRepository.findByUserIdAndFriendUserId(userId = userId, friendUserId = friendUserId) != null
+    }
+
     override fun save(userId: Long, friendUserId: Long) {
         val userFriendEntity = UserFriendEntity(userId = userId, friendUserId = friendUserId)
         userFriendRepository.save(userFriendEntity)

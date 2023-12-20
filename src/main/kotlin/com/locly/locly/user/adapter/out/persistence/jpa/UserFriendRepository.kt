@@ -9,4 +9,6 @@ interface UserFriendRepository : JpaRepository<UserFriendEntity, Long> {
     fun findAllByUserId(userId: Long, pageable: Pageable): List<UserFriendEntity>
 
     fun findAllByUserId(userId: Long): List<UserFriendEntity>
+
+    fun findByUserIdAndFriendUserId(userId: Long, friendUserId: Long): UserFriendEntity?
 }

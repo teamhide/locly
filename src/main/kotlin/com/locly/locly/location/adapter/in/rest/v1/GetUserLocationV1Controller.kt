@@ -30,7 +30,7 @@ class GetUserLocationV1Controller(
         @AuthenticationPrincipal currentUser: CurrentUser,
         @PathVariable("userId") userId: Long,
     ): ApiResponse<GetUserLocationResponse> {
-        val query = GetLocationQuery(userId = userId)
+        val query = GetLocationQuery(userId = currentUser.id, friendUserId = userId)
         val location = useCase.execute(query = query)
         val response = GetUserLocationResponse(
             userId = location.userId,

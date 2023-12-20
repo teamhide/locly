@@ -67,4 +67,17 @@ class UserFriendRepositoryAdapterTest : StringSpec({
         sut.size shouldBe 1
         sut[0] shouldBe userFriendEntity.friendUserId
     }
+
+    "userId의 친구 목록에 friendUserId가 있는지 확인한다" {
+        // Given
+        val userId = 1L
+        val friendUserId = 2L
+        every { userFriendRepository.findByUserIdAndFriendUserId(userId, friendUserId) } returns null
+
+        // When
+        val sut = repositoryAdapter.isFriendWith(userId = userId, friendUserId = friendUserId)
+
+        // Then
+        sut shouldBe false
+    }
 })

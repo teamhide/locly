@@ -1,9 +1,14 @@
 package com.locly.locly.location.adapter.`in`.rest.v1
 
+import com.locly.locly.location.application.exception.GhostModeUserException
+import com.locly.locly.location.application.exception.UserIsNotFriendException
 import com.locly.locly.test.BaseIntegrationTest
 import com.locly.locly.user.USER_ID_1_TOKEN
+import com.locly.locly.user.adapter.out.persistence.jpa.UserFriendRepository
 import com.locly.locly.user.adapter.out.persistence.jpa.UserRepository
+import com.locly.locly.user.domain.vo.UserStatus
 import com.locly.locly.user.makeUserEntity
+import com.locly.locly.user.makeUserFriendEntity
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders
@@ -15,22 +20,86 @@ class GetUserLocationV1ControllerTest : BaseIntegrationTest() {
     @Autowired
     lateinit var userRepository: UserRepository
 
+    @Autowired
+    lateinit var userFriendRepository: UserFriendRepository
+
+    @Test
+    fun `친구 상태가 아닌 유저의 위치를 조회하면 400이 반환된다`() {
+        // Given
+        // 1번 유저와
+        val userEntity1 = makeUserEntity()
+        userRepository.save(userEntity1)
+        // 2번 유저가 존재한다
+        val userEntity2 = makeUserEntity()
+        val savedUser2 = userRepository.save(userEntity2)
+
+        val exc = UserIsNotFriendException()
+
+        // When, Then
+        // 2번 유저의 위치를 요청한다
+        mockMvc.get(URL, savedUser2.id) {
+            header(HttpHeaders.AUTHORIZATION, "Bearer $USER_ID_1_TOKEN")
+        }
+            .andExpect {
+                status { isBadRequest() }
+                jsonPath("errorCode") { value(exc.errorCode) }
+                jsonPath("message") { value(exc.message) }
+            }
+    }
+
+    @Test
+    fun `유령 모드 상태인 유저의 위치를 조회하면 400이 반환된다`() {
+        // Given
+        // 1번 유저가 존재한다
+        val userEntity1 = makeUserEntity()
+        val savedUser1 = userRepository.save(userEntity1)
+        // 2번 유저는 오프라인 상태로 존재한다
+        val userEntity2 = makeUserEntity(status = UserStatus.GHOST)
+        val savedUser2 = userRepository.save(userEntity2)
+
+        // 1번 유저는 2번 유저를 친구로 등록해놓은 상태이다
+        val relation = makeUserFriendEntity(userId = savedUser1.id, friendUserId = savedUser2.id)
+        userFriendRepository.save(relation)
+
+        val exc = GhostModeUserException()
+
+        // When, Then
+        // 2번 유저의 위치를 요청한다
+        mockMvc.get(URL, savedUser2.id) {
+            header(HttpHeaders.AUTHORIZATION, "Bearer $USER_ID_1_TOKEN")
+        }
+            .andExpect {
+                status { isBadRequest() }
+                jsonPath("errorCode") { value(exc.errorCode) }
+                jsonPath("message") { value(exc.message) }
+            }
+    }
+
     @Test
     fun `특정 유저의 위치를 조회한다`() {
         // Given
-        val userEntity = makeUserEntity()
-        val savedUser = userRepository.save(userEntity)
+        // 1번 유저와
+        val userEntity1 = makeUserEntity()
+        val savedUser1 = userRepository.save(userEntity1)
+        // 2번 유저가 존재한다
+        val userEntity2 = makeUserEntity(status = UserStatus.ONLINE)
+        val savedUser2 = userRepository.save(userEntity2)
+
+        // 1번 유저는 2번 유저를 친구로 등록해놓은 상태이다
+        val relation = makeUserFriendEntity(userId = savedUser1.id, friendUserId = savedUser2.id)
+        userFriendRepository.save(relation)
 
         // When, Then
-        mockMvc.get(URL, savedUser.id) {
+        // 2번 유저의 위치를 요청한다
+        mockMvc.get(URL, savedUser2.id) {
             header(HttpHeaders.AUTHORIZATION, "Bearer $USER_ID_1_TOKEN")
         }
             .andExpect {
                 status { isOk() }
-                jsonPath("userId") { value(savedUser.id) }
-                jsonPath("nickname") { value(savedUser.nickname) }
-                jsonPath("location.lat") { value(savedUser.lat) }
-                jsonPath("location.lng") { value(savedUser.lng) }
+                jsonPath("userId") { value(savedUser1.id) }
+                jsonPath("nickname") { value(savedUser1.nickname) }
+                jsonPath("location.lat") { value(savedUser1.lat) }
+                jsonPath("location.lng") { value(savedUser1.lng) }
                 jsonPath("stayedAt") { isNotEmpty() }
             }
     }

@@ -1,6 +1,7 @@
 package com.locly.locly.location.application.port.out
 
 import com.locly.locly.location.domain.vo.UserLocation
+import com.locly.locly.user.domain.model.User
 import com.locly.locly.user.domain.model.UserWithLocation
 
 interface UserExternalPort {
@@ -9,4 +10,8 @@ interface UserExternalPort {
     fun updateUserLocation(userId: Long, location: UserLocation): Long
 
     fun getUserLocation(userId: Long): UserWithLocation
+
+    fun getUser(userId: Long): User
+
+    fun isFriendWith(userId: Long, friendUserId: Long): Boolean
 }

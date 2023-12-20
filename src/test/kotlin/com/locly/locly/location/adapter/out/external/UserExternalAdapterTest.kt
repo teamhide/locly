@@ -3,9 +3,12 @@ package com.locly.locly.location.adapter.out.external
 import com.locly.locly.location.domain.vo.UserLocation
 import com.locly.locly.user.application.port.`in`.GetFriendLocationsUseCase
 import com.locly.locly.user.application.port.`in`.GetUserLocationUseCase
+import com.locly.locly.user.application.port.`in`.GetUserUseCase
+import com.locly.locly.user.application.port.`in`.IsFriendWithUseCase
 import com.locly.locly.user.application.port.`in`.UpdateUserLocationUseCase
 import com.locly.locly.user.domain.model.UserWithLocation
 import com.locly.locly.user.domain.vo.Location
+import com.locly.locly.user.makeUser
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -16,10 +19,14 @@ internal class UserExternalAdapterTest : StringSpec({
     val getFriendLocationsUseCase = mockk<GetFriendLocationsUseCase>()
     val updateUserLocationUseCase = mockk<UpdateUserLocationUseCase>()
     val getUserLocationUseCase = mockk<GetUserLocationUseCase>()
+    val getUserUseCase = mockk<GetUserUseCase>()
+    val isFriendWithUseCase = mockk<IsFriendWithUseCase>()
     val externalAdapter = UserExternalAdapter(
         getFriendLocationsUseCase = getFriendLocationsUseCase,
         updateUserLocationUseCase = updateUserLocationUseCase,
         getUserLocationUseCase = getUserLocationUseCase,
+        getUserUseCase = getUserUseCase,
+        isFriendWithUseCase = isFriendWithUseCase,
     )
 
     "특정 유저의 친구들 위치를 조회한다" {
@@ -72,5 +79,38 @@ internal class UserExternalAdapterTest : StringSpec({
         sut.nickname shouldBe userWithLocation.nickname
         sut.location shouldBe userWithLocation.location
         sut.stayedAt shouldBe userWithLocation.stayedAt
+    }
+
+    "id로 유저를 조회한다" {
+        // Given
+        val userId = 1L
+        val user = makeUser()
+        every { getUserUseCase.execute(any()) } returns user
+
+        // When
+        val sut = externalAdapter.getUser(userId = userId)
+
+        // Then
+        sut.id shouldBe user.id
+        sut.password shouldBe user.password
+        sut.email shouldBe user.email
+        sut.nickname shouldBe user.nickname
+        sut.status shouldBe user.status
+        sut.location.lat shouldBe user.location.lat
+        sut.location.lng shouldBe user.location.lng
+        sut.stayedAt shouldBe user.stayedAt
+    }
+
+    "특정 유저가 특정 유저를 친구로 등록했는지 확인한다" {
+        // Given
+        val userId = 1L
+        val friendUserId = 2L
+        every { isFriendWithUseCase.execute(any()) } returns false
+
+        // When
+        val sut = externalAdapter.isFriendWith(userId = userId, friendUserId = friendUserId)
+
+        // Then
+        sut shouldBe false
     }
 })
