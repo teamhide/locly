@@ -7,6 +7,7 @@ import com.locly.locly.user.application.port.out.UpdateUserPersistencePort
 import com.locly.locly.user.domain.converter.UserConverter
 import com.locly.locly.user.domain.model.User
 import com.locly.locly.user.domain.vo.Location
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 
 @Component
@@ -32,6 +33,13 @@ class UserRepositoryAdapter(
                 stayedAt = it.stayedAt,
             )
         }
+    }
+
+    override fun findById(id: Long): User? {
+        val userEntity = userRepository.findByIdOrNull(id = id) ?: run {
+            return null
+        }
+        return UserConverter.from(user = userEntity)
     }
 
     override fun save(user: User): User {

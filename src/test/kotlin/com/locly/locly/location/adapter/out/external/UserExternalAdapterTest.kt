@@ -2,6 +2,7 @@ package com.locly.locly.location.adapter.out.external
 
 import com.locly.locly.location.domain.vo.UserLocation
 import com.locly.locly.user.application.port.`in`.GetFriendLocationsUseCase
+import com.locly.locly.user.application.port.`in`.GetUserLocationUseCase
 import com.locly.locly.user.application.port.`in`.UpdateUserLocationUseCase
 import com.locly.locly.user.domain.model.UserWithLocation
 import com.locly.locly.user.domain.vo.Location
@@ -14,9 +15,11 @@ import java.time.LocalDateTime
 internal class UserExternalAdapterTest : StringSpec({
     val getFriendLocationsUseCase = mockk<GetFriendLocationsUseCase>()
     val updateUserLocationUseCase = mockk<UpdateUserLocationUseCase>()
+    val getUserLocationUseCase = mockk<GetUserLocationUseCase>()
     val externalAdapter = UserExternalAdapter(
         getFriendLocationsUseCase = getFriendLocationsUseCase,
         updateUserLocationUseCase = updateUserLocationUseCase,
+        getUserLocationUseCase = getUserLocationUseCase,
     )
 
     "특정 유저의 친구들 위치를 조회한다" {
@@ -51,5 +54,23 @@ internal class UserExternalAdapterTest : StringSpec({
 
         // Then
         count shouldBe 1
+    }
+
+    "id에 해당하는 유저의 위치를 조회한다" {
+        // Given
+        val userId = 1L
+        val userWithLocation = UserWithLocation(
+            userId = 1L, nickname = "hide", location = Location(lat = 37.123, lng = 127.123), stayedAt = LocalDateTime.now()
+        )
+        every { getUserLocationUseCase.execute(any()) } returns userWithLocation
+
+        // When
+        val sut = externalAdapter.getUserLocation(userId = userId)
+
+        // Then
+        sut.userId shouldBe userWithLocation.userId
+        sut.nickname shouldBe userWithLocation.nickname
+        sut.location shouldBe userWithLocation.location
+        sut.stayedAt shouldBe userWithLocation.stayedAt
     }
 })

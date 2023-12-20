@@ -6,13 +6,19 @@ import com.locly.locly.user.makeUser
 import com.locly.locly.user.makeUserEntity
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import org.springframework.data.repository.findByIdOrNull
 
 class UserRepositoryAdapterTest : StringSpec({
     val userRepository = mockk<UserRepository>()
     val repositoryAdapter = UserRepositoryAdapter(userRepository = userRepository)
+
+    beforeEach {
+        clearAllMocks()
+    }
 
     "email과 nickname으로 유저를 조회한다" {
         // Given
@@ -90,5 +96,25 @@ class UserRepositoryAdapterTest : StringSpec({
         // Then
         count shouldBe 1
         verify(exactly = 1) { userRepository.updateLocationById(userId = userId, lat = lat, lng = lng) }
+    }
+
+    "id로 유저를 조회한다" {
+        // Given
+        val userEntity = makeUserEntity()
+        every { userRepository.findByIdOrNull(any()) } returns userEntity
+
+        // When
+        val sut = repositoryAdapter.findById(id = userEntity.id)!!
+
+        // Then
+        sut.id shouldBe userEntity.id
+        sut.password shouldBe userEntity.password
+        sut.email shouldBe userEntity.email
+        sut.nickname shouldBe userEntity.nickname
+        sut.status shouldBe userEntity.status
+        sut.location.lat shouldBe userEntity.lat
+        sut.location.lng shouldBe userEntity.lng
+        sut.stayedAt shouldBe userEntity.stayedAt
+        verify(exactly = 1) { userRepository.findByIdOrNull(any()) }
     }
 })

@@ -7,4 +7,6 @@ interface UserExternalPort {
     fun getFriendLocations(userId: Long): List<UserWithLocation>
 
     fun updateUserLocation(userId: Long, location: UserLocation): Long
+
+    fun getUserLocation(userId: Long): UserWithLocation
 }
