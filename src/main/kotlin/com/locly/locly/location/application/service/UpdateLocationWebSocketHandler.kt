@@ -1,6 +1,7 @@
 package com.locly.locly.location.application.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.locly.locly.common.config.websocket.HandshakeWithAuthInterceptor
 import com.locly.locly.location.application.port.out.MessagingPort
 import com.locly.locly.location.domain.model.UpdateUserLocation
@@ -25,6 +26,7 @@ class UpdateLocationWebSocketHandler(
             return
         }
 
+        objectMapper.registerKotlinModule()
         val request: UpdateUserLocation
         try {
             request = objectMapper.readValue(message.asBytes(), UpdateUserLocation::class.java)
@@ -41,6 +43,7 @@ class UpdateLocationWebSocketHandler(
         val userId = session.attributes[HandshakeWithAuthInterceptor.SESSION_USER_ID_KEY]
         if (userId != request.userId) {
             logger.error { "UpdateLocationWebSocketHandler | Auth error. userId=$userId, requestUserId=${request.userId}" }
+            return
         }
 
         messagingPort.sendLocationUpdated(message = request)

@@ -55,3 +55,10 @@ spring:
       location-updated: location-updated
 jwt:
   secret-key: hidehidehidehidehidehidehidehidehide
+logging:
+  level:
+    org.springframework.kafka.*: OFF
+    org.springframework.kafka.listener.[KafkaMessageListenerContainer$ListenerConsumer]: OFF
+    org.apache.kafka.*: OFF
+    kafka.*: OFF
+    org.apache.zookeeper.*: OFF

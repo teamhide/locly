@@ -47,6 +47,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.springframework.security:spring-security-messaging:6.2.0")
     implementation("org.springframework.kafka:spring-kafka")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.0")
     kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
     kapt("jakarta.annotation:jakarta.annotation-api")
     kapt("jakarta.persistence:jakarta.persistence-api")
@@ -63,6 +64,7 @@ dependencies {
     testImplementation("io.mockk:mockk:1.13.3")
     testImplementation("com.ninja-squad:springmockk:4.0.0")
     testImplementation("org.springframework.kafka:spring-kafka-test")
+    testImplementation("org.awaitility:awaitility-kotlin:4.2.0")
 }
 
 tasks.withType<KotlinCompile> {
