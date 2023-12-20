@@ -1,6 +1,8 @@
 package com.locly.locly.location.application.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.locly.locly.common.config.websocket.HandshakeWithAuthInterceptor
 import com.locly.locly.location.application.port.`in`.GetLocationsQuery
 import com.locly.locly.location.application.port.`in`.GetLocationsUseCase
@@ -28,6 +30,7 @@ class GetFriendLocationWebSocketHandler(
 
         val userId = session.attributes[HandshakeWithAuthInterceptor.SESSION_USER_ID_KEY]
 
+        objectMapper.registerKotlinModule().registerModule(JavaTimeModule())
         val request: RequestFriendLocation
         try {
             request = objectMapper.readValue(message.asBytes(), RequestFriendLocation::class.java)
@@ -37,7 +40,7 @@ class GetFriendLocationWebSocketHandler(
         }
 
         if (request.type != LocationRequestType.REQUEST) {
-            logger.error { "UpdateLocationWebSocketHandler | Invalid type=${request.type}" }
+            logger.error { "GetFriendLocationWebSocketHandler | Invalid type=${request.type}" }
             return
         }
 

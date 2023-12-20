@@ -136,6 +136,10 @@ tasks.jacocoTestReport {
                         "**/*Application*",
                         "**/Q*Entity*",
                         "**/healthcheck/CustomHealthIndicator*",
+                        "**/*logger*",
+                        "**/*Logger*",
+                        "**/Logger.class",
+                        "**/logger.class"
                     )
                 }
             }
@@ -157,6 +161,10 @@ tasks.jacocoTestCoverageVerification {
             excludes = listOf(
                 "com.locly.locly.LoclyApplicationKt",
                 "com.locly.locly.common.healthcheck**",
+                "**/*logger*",
+                "**/*Logger*",
+                "**/Logger.class",
+                "**/logger.class"
             ) + queryDslClasses
         }
     }
