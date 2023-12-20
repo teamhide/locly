@@ -1,4 +1,4 @@
-package com.locly.locly.location.application.service
+package com.locly.locly.location.adapter.`in`.websocket
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
@@ -16,7 +16,7 @@ import java.lang.Exception
 private val logger = KotlinLogging.logger { }
 
 @Component
-class UpdateLocationWebSocketHandler(
+class UpdateLocationHandler(
     private val objectMapper: ObjectMapper,
     private val messagingPort: MessagingPort,
 ) : TextWebSocketHandler() {

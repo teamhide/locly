@@ -1,4 +1,4 @@
-package com.locly.locly.location.application.service
+package com.locly.locly.location.adapter.`in`.websocket
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
@@ -12,11 +12,11 @@ import io.mockk.verify
 import org.springframework.web.socket.TextMessage
 import org.springframework.web.socket.WebSocketSession
 
-class UpdateLocationWebSocketHandlerTest : StringSpec({
+class UpdateLocationHandlerTest : StringSpec({
     val messagingPort = mockk<MessagingPort>()
     val objectMapper = ObjectMapper()
     objectMapper.registerKotlinModule()
-    val handler = UpdateLocationWebSocketHandler(
+    val handler = UpdateLocationHandler(
         objectMapper = objectMapper, messagingPort = messagingPort,
     )
 

@@ -1,4 +1,4 @@
-package com.locly.locly.common.config.websocket
+package com.locly.locly.location.adapter.`in`.websocket
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.locly.locly.location.adapter.out.persistence.mongo.UserLocationHistoryRepository
@@ -24,7 +24,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler
 import java.net.URI
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class WebSocketConfigTest {
+internal class UpdateLocationHandlerIntegrationTest {
     @LocalServerPort
     private var port: Int = 0
 

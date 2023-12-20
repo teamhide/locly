@@ -1,4 +1,4 @@
-package com.locly.locly.location.application.service
+package com.locly.locly.location.adapter.`in`.websocket
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.locly.locly.location.application.port.`in`.GetLocationsUseCase
@@ -15,10 +15,10 @@ import org.springframework.web.socket.TextMessage
 import org.springframework.web.socket.WebSocketSession
 import java.time.LocalDateTime
 
-class GetFriendLocationWebSocketHandlerTest : StringSpec({
+class GetFriendLocationHandlerTest : StringSpec({
     val getLocationsUseCase = mockk<GetLocationsUseCase>()
     val objectMapper = ObjectMapper()
-    val handler = GetFriendLocationWebSocketHandler(
+    val handler = GetFriendLocationHandler(
         getLocationsUseCase = getLocationsUseCase, objectMapper = objectMapper,
     )
 

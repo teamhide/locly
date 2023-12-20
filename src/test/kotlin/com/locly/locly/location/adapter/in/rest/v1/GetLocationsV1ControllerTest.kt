@@ -1,4 +1,4 @@
-package com.locly.locly.location.adapter.`in`.v1
+package com.locly.locly.location.adapter.`in`.rest.v1
 
 import com.locly.locly.test.BaseIntegrationTest
 import com.locly.locly.user.USER_ID_1_TOKEN

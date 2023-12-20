@@ -1,4 +1,4 @@
-package com.locly.locly.location.adapter.`in`.v1
+package com.locly.locly.location.adapter.`in`.rest.v1
 
 import com.locly.locly.common.response.ApiResponse
 import com.locly.locly.common.security.CurrentUser

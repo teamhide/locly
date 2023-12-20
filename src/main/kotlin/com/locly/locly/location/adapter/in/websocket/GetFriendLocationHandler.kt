@@ -1,4 +1,4 @@
-package com.locly.locly.location.application.service
+package com.locly.locly.location.adapter.`in`.websocket
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
@@ -18,7 +18,7 @@ import java.lang.Exception
 private val logger = KotlinLogging.logger { }
 
 @Component
-class GetFriendLocationWebSocketHandler(
+class GetFriendLocationHandler(
     private val getLocationsUseCase: GetLocationsUseCase,
     private val objectMapper: ObjectMapper,
 ) : TextWebSocketHandler() {
