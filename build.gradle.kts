@@ -48,6 +48,8 @@ dependencies {
     implementation("org.springframework.security:spring-security-messaging:6.2.0")
     implementation("org.springframework.kafka:spring-kafka")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.0")
+    implementation("org.hibernate:hibernate-core:6.1.7.Final")
+    implementation("org.hibernate:hibernate-spatial:6.1.7.Final")
     kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
     kapt("jakarta.annotation:jakarta.annotation-api")
     kapt("jakarta.persistence:jakarta.persistence-api")

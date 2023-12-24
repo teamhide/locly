@@ -4,10 +4,10 @@ CREATE TABLE user(
     email VARCHAR(255) NOT NULL,
     nickname VARCHAR(20) NOT NULL,
     status VARCHAR(20) NOT NULL,
-    lat DOUBLE NOT NULL,
-    lng DOUBLE NOT NULL,
+    location POINT NOT NULL,
     stayed_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6)
 );
+CREATE SPATIAL INDEX idx__location ON user (location);
 CREATE INDEX idx__nickname_email ON user (nickname, email);

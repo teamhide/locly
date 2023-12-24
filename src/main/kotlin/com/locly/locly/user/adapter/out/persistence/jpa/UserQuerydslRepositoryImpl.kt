@@ -1,5 +1,6 @@
 package com.locly.locly.user.adapter.out.persistence.jpa
 
+import com.locly.locly.common.geospatial.PointConverter
 import com.querydsl.jpa.impl.JPAQueryFactory
 import jakarta.persistence.EntityManager
 
@@ -11,8 +12,7 @@ class UserQuerydslRepositoryImpl(
 
     override fun updateLocationById(userId: Long, lat: Double, lng: Double): Long {
         val count = queryFactory.update(userEntity)
-            .set(userEntity.lat, lat)
-            .set(userEntity.lng, lng)
+            .set(userEntity.location, PointConverter.from(lat = lat, lng = lng))
             .where(userEntity.id.eq(userId))
             .execute()
         entityManager.flush()

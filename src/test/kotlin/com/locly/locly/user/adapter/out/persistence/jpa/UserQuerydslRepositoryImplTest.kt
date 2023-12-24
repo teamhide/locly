@@ -31,8 +31,8 @@ class UserQuerydslRepositoryImplTest {
         sut.email shouldBe savedUser.email
         sut.nickname shouldBe savedUser.nickname
         sut.status shouldBe savedUser.status
-        sut.lat shouldBe lat
-        sut.lng shouldBe lng
+        sut.location.x shouldBe lat
+        sut.location.y shouldBe lng
         sut.stayedAt shouldBe savedUser.stayedAt
     }
 }

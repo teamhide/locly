@@ -98,8 +98,8 @@ class GetUserLocationV1ControllerTest : BaseIntegrationTest() {
                 status { isOk() }
                 jsonPath("userId") { value(savedUser1.id) }
                 jsonPath("nickname") { value(savedUser1.nickname) }
-                jsonPath("location.lat") { value(savedUser1.lat) }
-                jsonPath("location.lng") { value(savedUser1.lng) }
+                jsonPath("location.lat") { value(savedUser1.location.x) }
+                jsonPath("location.lng") { value(savedUser1.location.y) }
                 jsonPath("stayedAt") { isNotEmpty() }
             }
     }

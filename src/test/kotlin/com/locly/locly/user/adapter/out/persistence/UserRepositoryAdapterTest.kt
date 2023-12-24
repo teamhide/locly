@@ -34,8 +34,8 @@ class UserRepositoryAdapterTest : StringSpec({
         sut.email shouldBe userEntity.email
         sut.nickname shouldBe userEntity.nickname
         sut.status shouldBe userEntity.status
-        sut.location.lat shouldBe userEntity.lat
-        sut.location.lng shouldBe userEntity.lng
+        sut.location.lat shouldBe userEntity.location.x
+        sut.location.lng shouldBe userEntity.location.y
         sut.stayedAt shouldBe userEntity.stayedAt
         verify(exactly = 1) { userRepository.findByEmailOrNickname(any(), any()) }
     }
@@ -55,8 +55,8 @@ class UserRepositoryAdapterTest : StringSpec({
         sut.email shouldBe userEntity.email
         sut.nickname shouldBe userEntity.nickname
         sut.status shouldBe userEntity.status
-        sut.location.lat shouldBe userEntity.lat
-        sut.location.lng shouldBe userEntity.lng
+        sut.location.lat shouldBe userEntity.location.x
+        sut.location.lng shouldBe userEntity.location.y
         sut.stayedAt shouldBe userEntity.stayedAt
         verify(exactly = 1) { userRepository.save(any()) }
     }
@@ -78,8 +78,8 @@ class UserRepositoryAdapterTest : StringSpec({
         user.email shouldBe userEntity.email
         user.nickname shouldBe userEntity.nickname
         user.status shouldBe userEntity.status
-        user.location.lat shouldBe userEntity.lat
-        user.location.lng shouldBe userEntity.lng
+        user.location.lat shouldBe userEntity.location.x
+        user.location.lng shouldBe userEntity.location.y
         user.stayedAt shouldBe userEntity.stayedAt
     }
 
@@ -112,8 +112,8 @@ class UserRepositoryAdapterTest : StringSpec({
         sut.email shouldBe userEntity.email
         sut.nickname shouldBe userEntity.nickname
         sut.status shouldBe userEntity.status
-        sut.location.lat shouldBe userEntity.lat
-        sut.location.lng shouldBe userEntity.lng
+        sut.location.lat shouldBe userEntity.location.x
+        sut.location.lng shouldBe userEntity.location.y
         sut.stayedAt shouldBe userEntity.stayedAt
         verify(exactly = 1) { userRepository.findByIdOrNull(any()) }
     }

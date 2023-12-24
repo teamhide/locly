@@ -1,5 +1,6 @@
 package com.locly.locly.user
 
+import com.locly.locly.common.geospatial.PointConverter
 import com.locly.locly.user.adapter.`in`.v1.RegisterUserRequest
 import com.locly.locly.user.adapter.out.persistence.jpa.UserEntity
 import com.locly.locly.user.adapter.out.persistence.jpa.UserFriendEntity
@@ -28,8 +29,7 @@ fun makeUserEntity(
         email = email,
         nickname = nickname,
         status = status,
-        lat = lat,
-        lng = lng,
+        location = PointConverter.from(lat = lat, lng = lng),
         stayedAt = stayedAt,
         id = id,
     )

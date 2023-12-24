@@ -19,8 +19,8 @@ internal class UserConverterTest : StringSpec({
         sut.email shouldBe user.email
         sut.nickname shouldBe user.nickname
         sut.status shouldBe user.status
-        sut.location.lat shouldBe user.lat
-        sut.location.lng shouldBe user.lng
+        sut.location.lat shouldBe user.location.x
+        sut.location.lng shouldBe user.location.y
         sut.stayedAt shouldBe user.stayedAt
     }
 
@@ -37,8 +37,8 @@ internal class UserConverterTest : StringSpec({
         sut.email shouldBe user.email
         sut.nickname shouldBe user.nickname
         sut.status shouldBe user.status
-        sut.lat shouldBe user.location.lat
-        sut.lng shouldBe user.location.lng
+        sut.location.x shouldBe user.location.lat
+        sut.location.y shouldBe user.location.lng
         sut.stayedAt shouldBe user.stayedAt
     }
 })

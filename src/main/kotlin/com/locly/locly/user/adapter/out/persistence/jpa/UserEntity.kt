@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Index
 import jakarta.persistence.Table
+import org.locationtech.jts.geom.Point
 import java.time.LocalDateTime
 
 @Entity
@@ -34,11 +35,8 @@ class UserEntity(
     @Enumerated(EnumType.STRING)
     val status: UserStatus,
 
-    @Column(name = "lat", nullable = false)
-    val lat: Double,
-
-    @Column(name = "lng", nullable = false)
-    val lng: Double,
+    @Column(name = "location", columnDefinition = "POINT")
+    val location: Point,
 
     @Column(name = "stayed_at", nullable = false)
     val stayedAt: LocalDateTime,

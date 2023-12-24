@@ -39,13 +39,13 @@ class GetLocationsV1ControllerTest : BaseIntegrationTest() {
                 status { isOk() }
                 jsonPath("$.locations.[0].userId") { value(userEntity2.id) }
                 jsonPath("$.locations.[0].nickname") { value(userEntity2.nickname) }
-                jsonPath("$.locations.[0].lat") { value(userEntity2.lat) }
-                jsonPath("$.locations.[0].lng") { value(userEntity2.lng) }
+                jsonPath("$.locations.[0].lat") { value(userEntity2.location.x) }
+                jsonPath("$.locations.[0].lng") { value(userEntity2.location.y) }
                 jsonPath("$.locations.[0].stayedAt") { isNotEmpty() }
                 jsonPath("$.locations.[1].userId") { value(userEntity3.id) }
                 jsonPath("$.locations.[1].nickname") { value(userEntity3.nickname) }
-                jsonPath("$.locations.[1].lat") { value(userEntity3.lat) }
-                jsonPath("$.locations.[1].lng") { value(userEntity3.lng) }
+                jsonPath("$.locations.[1].lat") { value(userEntity3.location.x) }
+                jsonPath("$.locations.[1].lng") { value(userEntity3.location.y) }
                 jsonPath("$.locations.[1].stayedAt") { isNotEmpty() }
             }
     }

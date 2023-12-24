@@ -29,7 +29,7 @@ class UserRepositoryAdapter(
                 email = it.email,
                 nickname = it.nickname,
                 status = it.status,
-                location = Location(lat = it.lat, lng = it.lng),
+                location = Location(lat = it.location.x, lng = it.location.y),
                 stayedAt = it.stayedAt,
             )
         }
