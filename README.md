@@ -1,16 +1,25 @@
 # Locly
 
-locly is a location sharing service similar to Zenly.
+locly is a location sharing service similar to Zenly
 
-## 요구사항
+## Architecture overview
+![architecture](./architecture.png)
 
-### 유저
+## Stack
+- Spring Boot
+- Data JPA & QueryDSL
+- MySQL & MongoDB
+- Kafka
+
+## Functional requirements
+
+### User
 - [x] 회원가입한다
 - [ ] 프로필을 수정한다
 - [x] 다른 유저를 친구로 추가한다
   - [ ] 유저 당 최대 친구 수는 20명이다
 
-### 위치
+### Location
 - [x] 내 위치를 업데이트한다
   - [x] 위치 기록을 별도로 저장한다
 - [ ] 내 상태를 업데이트한다
